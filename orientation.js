@@ -253,7 +253,9 @@ function resetChildrenRefreshes(child) {
  * @param args
  */
 var applyOrientationToPage = function(page, args){
-    var isLandscape = application.getOrientation() === enums.DeviceOrientation.landscape;
+    var currentOrientation = application.getOrientation();
+    if (currentOrientation) {
+    var isLandscape = currentOrientation === enums.DeviceOrientation.landscape;
 
     page.classList.toggle('landscape', isLandscape);
 
@@ -289,6 +291,7 @@ var applyOrientationToPage = function(page, args){
     }
     if (page.exports && typeof page.exports.orientation === "function") {
         page.exports.orientation({landscape: isLandscape, page: page, object: page});
+    }
     }
 };
 
