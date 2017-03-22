@@ -254,44 +254,45 @@ function resetChildrenRefreshes(child) {
  */
 var applyOrientationToPage = function(page, args){
     var currentOrientation = application.getOrientation();
+    // currentOrientation will be false for orientation position face up and face down in iOS, So no orientation change will be triggered
     if (currentOrientation) {
-    var isLandscape = currentOrientation === enums.DeviceOrientation.landscape;
+        var isLandscape = currentOrientation === enums.DeviceOrientation.landscape;
 
-    page.classList.toggle('landscape', isLandscape);
+        page.classList.toggle('landscape', isLandscape);
 
-    // Unfortunately there is a bug in the NS CSS parser, so we have to work around it
-    var i;
-    if (page.classList.contains('android')) {
-        for (i=0;i<page.classList.length;i++) {
-            if (page.classList[i].indexOf('android') === 0) {
-                if (page.classList[i].indexOf('.') >= 0) { continue; }
-                page.classList.toggle(page.classList[i]+".landscape", isLandscape);
+        // Unfortunately there is a bug in the NS CSS parser, so we have to work around it
+        var i;
+        if (page.classList.contains('android')) {
+            for (i=0;i<page.classList.length;i++) {
+                if (page.classList[i].indexOf('android') === 0) {
+                    if (page.classList[i].indexOf('.') >= 0) { continue; }
+                    page.classList.toggle(page.classList[i]+".landscape", isLandscape);
+                }
             }
-        }
-    } else if (page.classList.contains('ios')) {
-        for (i=0;i<page.classList.length;i++) {
-            if (page.classList[i].indexOf('ios') === 0) {
-                if (page.classList[i].indexOf('.') >= 0) { continue; }
-                page.classList.toggle(page.classList[i]+".landscape", isLandscape);
+        } else if (page.classList.contains('ios')) {
+            for (i=0;i<page.classList.length;i++) {
+                if (page.classList[i].indexOf('ios') === 0) {
+                    if (page.classList[i].indexOf('.') >= 0) { continue; }
+                    page.classList.toggle(page.classList[i]+".landscape", isLandscape);
+                }
             }
+            //currentPage.classList.toggle('ios.landscape', isLandscape);
+        } else if (page.classList.contains('windows')) {
+            page.classList.toggle('windows.landscape', isLandscape);
         }
-        //currentPage.classList.toggle('ios.landscape', isLandscape);
-    } else if (page.classList.contains('windows')) {
-        page.classList.toggle('windows.landscape', isLandscape);
-    }
-    // --- End NS Bug Patch ---
+        // --- End NS Bug Patch ---
 
 
 
-    page._refreshCss();
-    page.style._resetCssValues();
-    page._applyStyleFromScope();
-    if (args != null) {
-        view.eachDescendant(page, resetChildrenRefreshes);
-    }
-    if (page.exports && typeof page.exports.orientation === "function") {
-        page.exports.orientation({landscape: isLandscape, page: page, object: page});
-    }
+        page._refreshCss();
+        page.style._resetCssValues();
+        page._applyStyleFromScope();
+        if (args != null) {
+            view.eachDescendant(page, resetChildrenRefreshes);
+        }
+        if (page.exports && typeof page.exports.orientation === "function") {
+            page.exports.orientation({landscape: isLandscape, page: page, object: page});
+        }
     }
 };
 
