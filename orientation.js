@@ -36,11 +36,13 @@ module.exports = orientation;
 if (global.android) {
 	orientation.getOrientation = function () {
 		var context = getContext();
-		var orientation = context.getSystemService("window").getDefaultDisplay().getOrientation();
+		var orientation = context.getSystemService("window").getDefaultDisplay().getRotation();
 		switch (orientation) {
-			case 1: /* LANDSCAPE */
+			case 1: // 90°  LANDSCAPE
+			case 3: // 270° LANDSCAPE
 				return enums.DeviceOrientation.landscape;
-			case 0: /* PORTRAIT */
+			case 0: // 0°   PORTRAIT
+			case 2: // 180° PORTRAIT
 				return enums.DeviceOrientation.portrait;
 			default:
 				return false;
@@ -64,24 +66,8 @@ if (global.android) {
 		}
 
 		var activity = application.android.foregroundActivity;
-		var rotation = activity.getSystemService("window").getDefaultDisplay().getRotation();
-		var tempOrientation  = activity.getSystemService("window").getDefaultDisplay().getOrientation();
-		var currentOrientation = 0;
-		switch(tempOrientation)
-		{
-			case /* LANDSCAPE */ 1:
-				if(rotation === 0 /* Surface.ROTATION_0 */ || rotation === 1 /* Surface.ROTATION_90 */ )
-					currentOrientation = 0; /* ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE; */
-				else
-					currentOrientation = 8; /* ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE; */
-				break;
-			case /* PORTRAIT */ 0:
-				if(rotation === 0 /* Surface.ROTATION_0 */ || rotation === 3 /* Surface.ROTATION_270 */)
-					currentOrientation = 1; /* ActivityInfo.SCREEN_ORIENTATION_PORTRAIT; */
-				else
-					currentOrientation = 9; /* ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT; */
-		}
-		activity.setRequestedOrientation(currentOrientation);
+
+		activity.setRequestedOrientation(14); // SCREEN_ORIENTATION_LOCKED = 14
 	};
 
 	orientation.setOrientation = function(value, animation) {
@@ -94,18 +80,21 @@ if (global.android) {
 
 		var val = value.toLowerCase();
 		var orientation;
+		
 		switch (val) {
 			case 'landscape':
+				orientation = 6; // SCREEN_ORIENTATION_SENSOR_LANDSCAPE = 6
+				break;
 			case 'landscaperight':
-				orientation = 0;
+				orientation = 0; // SCREEN_ORIENTATION_LANDSCAPE = 0
 				break;
 			case 'landscapeleft':
-				orientation = 8;
+				orientation = 8; // SCREEN_ORIENTATION_REVERSE_LANDSCAPE = 8
 				break;
 
 			case 'portrait':
 			default:
-				orientation = 1;
+				orientation = 1; // SCREEN_ORIENTATION_PORTRAIT = 1
 				break;
 		}
 		activity.setRequestedOrientation(orientation);
@@ -258,7 +247,7 @@ function resetChildrenRefreshes(child) {
  * @param args
  */
 var applyOrientationToPage = function(page, args){
-	var currentOrientation = application.getOrientation();
+	var currentOrientation = orientation.getOrientation();
 
 	// If somehow we didn't get the orientation we don't do anything!
 	if (!currentOrientation) return;
