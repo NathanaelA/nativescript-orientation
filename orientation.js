@@ -66,24 +66,8 @@ if (global.android) {
 		}
 
 		var activity = application.android.foregroundActivity;
-		var rotation = activity.getSystemService("window").getDefaultDisplay().getRotation();
-		var tempOrientation  = activity.getSystemService("window").getDefaultDisplay().getOrientation();
-		var currentOrientation = 0;
-		switch(tempOrientation)
-		{
-			case /* LANDSCAPE */ 1:
-				if(rotation === 0 /* Surface.ROTATION_0 */ || rotation === 1 /* Surface.ROTATION_90 */ )
-					currentOrientation = 0; /* ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE; */
-				else
-					currentOrientation = 8; /* ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE; */
-				break;
-			case /* PORTRAIT */ 0:
-				if(rotation === 0 /* Surface.ROTATION_0 */ || rotation === 3 /* Surface.ROTATION_270 */)
-					currentOrientation = 1; /* ActivityInfo.SCREEN_ORIENTATION_PORTRAIT; */
-				else
-					currentOrientation = 9; /* ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT; */
-		}
-		activity.setRequestedOrientation(currentOrientation);
+
+		activity.setRequestedOrientation(14); // SCREEN_ORIENTATION_LOCKED = 14
 	};
 
 	orientation.setOrientation = function(value, animation) {
