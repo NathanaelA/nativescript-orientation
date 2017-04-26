@@ -36,11 +36,13 @@ module.exports = orientation;
 if (global.android) {
 	orientation.getOrientation = function () {
 		var context = getContext();
-		var orientation = context.getSystemService("window").getDefaultDisplay().getOrientation();
+		var orientation = context.getSystemService("window").getDefaultDisplay().getRotation();
 		switch (orientation) {
-			case 1: /* LANDSCAPE */
+			case 1: // 90°  LANDSCAPE
+			case 3: // 270° LANDSCAPE
 				return enums.DeviceOrientation.landscape;
-			case 0: /* PORTRAIT */
+			case 0: // 0°   PORTRAIT
+			case 2: // 180° PORTRAIT
 				return enums.DeviceOrientation.portrait;
 			default:
 				return false;
@@ -258,7 +260,7 @@ function resetChildrenRefreshes(child) {
  * @param args
  */
 var applyOrientationToPage = function(page, args){
-	var currentOrientation = application.getOrientation();
+	var currentOrientation = orientation.getOrientation();
 
 	// If somehow we didn't get the orientation we don't do anything!
 	if (!currentOrientation) return;
