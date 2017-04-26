@@ -80,18 +80,21 @@ if (global.android) {
 
 		var val = value.toLowerCase();
 		var orientation;
+		
 		switch (val) {
 			case 'landscape':
+				orientation = 6; // SCREEN_ORIENTATION_SENSOR_LANDSCAPE = 6
+				break;
 			case 'landscaperight':
-				orientation = 0;
+				orientation = 0; // SCREEN_ORIENTATION_LANDSCAPE = 0
 				break;
 			case 'landscapeleft':
-				orientation = 8;
+				orientation = 8; // SCREEN_ORIENTATION_REVERSE_LANDSCAPE = 8
 				break;
 
 			case 'portrait':
 			default:
-				orientation = 1;
+				orientation = 1; // SCREEN_ORIENTATION_PORTRAIT = 1
 				break;
 		}
 		activity.setRequestedOrientation(orientation);
