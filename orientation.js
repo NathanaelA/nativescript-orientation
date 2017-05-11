@@ -299,7 +299,6 @@ var applyOrientationToPage = function(page, args){
 
 
 	page._refreshCss();
-	page.style._resetCssValues();
 	page._applyStyleFromScope();
 	if (args != null) {
 		view.eachDescendant(page, resetChildrenRefreshes);
