@@ -33,7 +33,7 @@ module.exports = orientation;
 /**
  * Helper function hooked to the Application to get the current orientation
  */
-if (global.android) {
+if (application.android) {
 	orientation.getOrientation = function () {
 		var context = getContext();
 		var orientation = context.getSystemService("window").getDefaultDisplay().getOrientation();
@@ -115,8 +115,7 @@ if (global.android) {
 
 	};
 
-} else if (global.NSObject && global.UIDevice) {
-
+} else if (application.ios) {
 	setupiOSController();
 	orientation.getOrientation = function () {
 		var device = utils.ios.getter(UIDevice, UIDevice.currentDevice);
@@ -299,7 +298,6 @@ var applyOrientationToPage = function(page, args){
 
 
 	page._refreshCss();
-	page.style._resetCssValues();
 	page._applyStyleFromScope();
 	if (args != null) {
 		view.eachDescendant(page, resetChildrenRefreshes);
