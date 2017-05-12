@@ -22,8 +22,12 @@ Thanks to TJ VanToll for the awesome animated gif.
 
 ## Installation 
 
-tns plugin add nativescript-orientation  
 
+##### NativeScript 3.x.x
+tns plugin add nativescript-orientation
+
+##### NativeScript 2.x.x
+tns plugin add nativescript-orientation@1.6.1
 
 ## Usage
 
