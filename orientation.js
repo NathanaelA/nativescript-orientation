@@ -35,17 +35,16 @@ module.exports = orientation;
  */
 if (application.android) {
 	orientation.getOrientation = function () {
-		var context = getContext();
-		var orientation = context.getSystemService("window").getDefaultDisplay().getOrientation();
-		switch (orientation) {
-			case 1: /* LANDSCAPE */
-				return enums.DeviceOrientation.landscape;
-			case 0: /* PORTRAIT */
-				return enums.DeviceOrientation.portrait;
-			default:
-				return false;
-		}
-	};
+        var orientation = getContext().getResources().getConfiguration().orientation;
+        switch (orientation) {
+            case 1: /* ORIENTATION_PORTRAIT (0x00000001) */
+                return enums.DeviceOrientation.portrait;
+            case 2: /* ORIENTATION_LANDSCAPE (0x00000002) */
+                return enums.DeviceOrientation.landscape;
+            default: /* ORIENTATION_UNDEFINED (0x00000000) */
+                return false;
+        }
+    };
 
 	orientation.enableRotation = function() {
 		if (!application.android || !application.android.foregroundActivity) {
