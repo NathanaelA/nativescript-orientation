@@ -1,6 +1,6 @@
 {
 		"name": "nativescript-orientation",
-		"version": "2.2.6",
+		"version": "2.2.4",
 		"description": "A NativeScript plugin to deal with Declarative UI and Screen Orientation",
 		"main": "orientation",
 		"typings": "index.d.ts",
