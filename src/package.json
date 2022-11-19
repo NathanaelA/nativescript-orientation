@@ -25,6 +25,9 @@
 				"nativescript-globalevents": "latest",
 				"nativescript-dom": "latest"
 		},
+		"devDependencies": {
+				"@nativescript/core": "rc"
+		},
 		"keywords": [
 				"NativeScript",
 				"orientation",
@@ -81,9 +84,8 @@
 				"url": "https://proplugins.org/proplugins/nativescript-orientation/issues"
 		},
 		"scripts": {
-			"postinstall": "node postinstall.js || echo \"ignore\""
+				"postinstall": "node postinstall.js || echo \"ignore\""
 		},
 		"homepage": "https://proplugins.org/proplugins/nativescript-orientation",
-		"readmeFilename": "README.md",
-		"devDependencies": {}
+		"readmeFilename": "README.md"
 }
